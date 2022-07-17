@@ -1,0 +1,22 @@
+{
+    "name": "mike/mcgrath",
+    "description": "example server using reactphp",
+    "type": "project",
+    "license": "BSD3",
+    "autoload": {
+        "psr-4": {
+            "Mike\\Mcgrath\\": "src/"
+        }, 
+        "files": ["bootstrap.php"]
+    },
+    "authors": [
+        {
+            "name": "mokeseven7",
+            "email": "mokeseven7@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "react/http": "1.x-dev"
+    }
+}
