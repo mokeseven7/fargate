@@ -52,7 +52,7 @@ $http = new React\Http\HttpServer(function (Psr\Http\Message\ServerRequestInterf
     return Response::json($user)->withStatus(200);
 });
 
-$socket = new SocketServer(isset($argv[1]) ? $argv[1] : '127.0.0.1:8080');
+$socket = new SocketServer(isset($argv[1]) ? $argv[1] : '127.0.0.1:80');
 
 $http->listen($socket);
 
