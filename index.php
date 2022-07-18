@@ -5,25 +5,25 @@ use React\Socket\SocketServer;
 use React\Http\Message\Response;
 
 
-require "./vendor/autoload.php";
+require "vendor/autoload.php";
 
 $error_strings = [
     'invalid' => [
-        'reason' => 'Invalid JSON data given', 
+        'reason' => 'Invalid JSON data given',
         'status' => Response::STATUS_UNSUPPORTED_MEDIA_TYPE
     ],
     'missing' => [
-        'reason' => 'JSON data does not contain a string "name" property', 
+        'reason' => 'JSON data does not contain a string "name" property',
         'status' => Response::STATUS_BAD_REQUEST
     ],
     'content_type' => [
-        'reason' => 'Sorry, this endpiont only supports application/json media type', 
+        'reason' => 'Sorry, this endpiont only supports application/json media type',
         'status' => Response::STATUS_UNPROCESSABLE_ENTITY
     ],
 ];
 
-$http = new React\Http\HttpServer(function (Psr\Http\Message\ServerRequestInterface $request) use($error_strings){
-    
+$http = new React\Http\HttpServer(function (Psr\Http\Message\ServerRequestInterface $request) use ($error_strings) {
+
 
     //TODO: Return plaintext fallback in content negotiation middleware
     if (!in_array('application/json', array_values($request->getHeader('Content-Type')))) {
@@ -32,7 +32,7 @@ $http = new React\Http\HttpServer(function (Psr\Http\Message\ServerRequestInterf
 
     //Check if there request body
     $input = json_decode($request->getBody()->getContents());
-    
+
     //Check to see if we got an error when trying to parse the json 
     if (json_last_error() !== JSON_ERROR_NONE) {
         $error = $error_strings['invalid'];
@@ -45,14 +45,14 @@ $http = new React\Http\HttpServer(function (Psr\Http\Message\ServerRequestInterf
 
     $user = json_decode(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'user.json'), true);
 
-    if(!empty($error)){
-        return Response::json(['error' => $error['reason']])->withStatus($error['status'])->withHeader('Content-Type', 'application/json');    
+    if (!empty($error)) {
+        return Response::json(['error' => $error['reason']])->withStatus($error['status'])->withHeader('Content-Type', 'application/json');
     }
 
     return Response::json($user)->withStatus(200);
 });
 
-$socket = new SocketServer(isset($argv[1]) ? $argv[1] : '127.0.0.1:8080');
+$socket = new SocketServer('0.0.0.0:80');
 
 $http->listen($socket);
 

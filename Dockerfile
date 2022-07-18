@@ -40,10 +40,10 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
     --filename=composer \
   && composer self-update
 
-COPY app/ /var/www/html
+COPY . /var/www/html
 
 
 EXPOSE 80
 
 
-CMD ["php", "index.php", "127.0.0.1:8080"]
+CMD ["php", "index.php"]

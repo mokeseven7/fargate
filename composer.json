@@ -6,8 +6,7 @@
     "autoload": {
         "psr-4": {
             "Mike\\Mcgrath\\": "src/"
-        }, 
-        "files": ["bootstrap.php"]
+        }
     },
     "authors": [
         {
